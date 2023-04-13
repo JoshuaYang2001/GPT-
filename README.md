@@ -34,21 +34,6 @@ VITE v3.2.5  ready in 294 ms
 ➜  Local:   http://localhost:5173/
 ➜  Network: use --host to expose
 ```
-
-按住 `Ctrl` 或 `command` 点击 Local 链接，在浏览器中打开项目，然后在页面底部输入框中填入您的 API Key，然后点击保存，即可开始使用！
-
-如果想要更改 API Key，点击页面右上角 `设置`，重新输入并保存即可。
-
-如果你想要打包在本地运行，[查看这里](/docs/electron-packaging-guide.md)。
-
-希望这能对您有所帮助。如果您还有其他问题，请随时在评论区提出，谢谢！
-
-## 赞赏
-
-如果您觉得我的项目对您有所帮助，可以通过扫描下方二维码进行打赏，让我更有动力继续开发和改进，感谢您的支持！
-
-![appreciation-qr](/img/appreciation-qr.png)
-
-## 许可证
-
-本项目使用 [MIT](LICENSE) 协议
+ 
+ ## 黑夜模式、国际化、用户板块、系统分析Echarts
+ 

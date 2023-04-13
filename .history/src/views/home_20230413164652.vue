@@ -16,13 +16,15 @@
     </div>
 
     <!-- 弹出框 -->
-
-    <el-dialog v-model="dialogVisible" width="40%">
-      <!-- 选项卡 -->
-      <Tabs></Tabs>
+    <el-dialog
+      v-model="dialogVisible"
+      title="Tips"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <span>This is a message</span>
     </el-dialog>
 
-    <!-- 弹出框结束 -->
     <div class="flex-1 mx-2 mt-20 mb-2" ref="chatListDom">
       <div
         class="group flex flex-col px-4 py-3 hover:bg-slate-100 rounded-lg"
@@ -64,8 +66,9 @@
 </template>
 
 <script setup lang="ts">
-// import Tabs from "@/components/settings/Tabs";
-import Tabs from "@/components/settings/Tabs.vue";
+//弹出框
+import { ElMessageBox } from "element-plus";
+
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";
 import { chat } from "@/libs/gpt";
@@ -187,14 +190,7 @@ const sendOrSave = () => {
   }
 };
 // 点击配置保存
-// 设置的对话框
-let dialogVisible = ref(false);
-// let dialogVisible = ref(false);
-// 点击设置
 const clickConfig = () => {
-  dialogVisible.value = true;
-  console.log(dialogVisible.value);
-
   if (!isConfig.value) {
     messageContent.value = getAPIKey();
   } else {
@@ -225,13 +221,10 @@ const getAPIKey = () => {
   return apiKey;
 };
 
-// 切换配置状态
 const switchConfigStatus = () => (isConfig.value = !isConfig.value);
 
-// 清楚消息内容
 const clearMessageContent = () => (messageContent.value = "");
 
-// scroll到页面底端
 const scrollToBottom = () => {
   if (!chatListDom.value) return;
   scrollTo(0, chatListDom.value.scrollHeight);

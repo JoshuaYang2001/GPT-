@@ -17,9 +17,15 @@
 
     <!-- 弹出框 -->
 
-    <el-dialog v-model="dialogVisible" width="40%">
-      <!-- 选项卡 -->
-      <Tabs></Tabs>
+    <el-dialog v-model="dialogVisible" title="全局设置" width="30%">
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 弹出框结束 -->
@@ -64,8 +70,8 @@
 </template>
 
 <script setup lang="ts">
-// import Tabs from "@/components/settings/Tabs";
-import Tabs from "@/components/settings/Tabs.vue";
+import Tabs from "@/components/settings/Tabs";
+
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";
 import { chat } from "@/libs/gpt";

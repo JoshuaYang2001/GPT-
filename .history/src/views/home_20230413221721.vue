@@ -17,7 +17,7 @@
 
     <!-- 弹出框 -->
 
-    <el-dialog v-model="dialogVisible" width="40%">
+    <el-dialog v-model="dialogVisible" width="50%">
       <!-- 选项卡 -->
       <Tabs></Tabs>
     </el-dialog>

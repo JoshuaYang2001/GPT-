@@ -17,10 +17,24 @@
 
     <!-- 弹出框 -->
 
-    <el-dialog v-model="dialogVisible" width="40%">
-      <!-- 选项卡 -->
-      <Tabs></Tabs>
-    </el-dialog>
+    <Dialog></Dialog>
+    <template>
+      <!-- <el-button text @click="dialogVisible = true">
+        click to open the Dialog
+      </el-button> -->
+
+      <el-dialog v-model="dialogVisible" title="Tips" width="30%">
+        <span>This is a message</span>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="dialogVisible = false">
+              Confirm
+            </el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </template>
 
     <!-- 弹出框结束 -->
     <div class="flex-1 mx-2 mt-20 mb-2" ref="chatListDom">
@@ -64,8 +78,12 @@
 </template>
 
 <script setup lang="ts">
+//弹出框
+import { ElDialog } from "element-plus";
+import Dialog from "./a.vue";
+import { ElMessageBox } from "element-plus";
 // import Tabs from "@/components/settings/Tabs";
-import Tabs from "@/components/settings/Tabs.vue";
+
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";
 import { chat } from "@/libs/gpt";
@@ -188,8 +206,8 @@ const sendOrSave = () => {
 };
 // 点击配置保存
 // 设置的对话框
+
 let dialogVisible = ref(false);
-// let dialogVisible = ref(false);
 // 点击设置
 const clickConfig = () => {
   dialogVisible.value = true;

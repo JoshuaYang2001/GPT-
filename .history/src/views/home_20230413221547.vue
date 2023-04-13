@@ -17,9 +17,17 @@
 
     <!-- 弹出框 -->
 
-    <el-dialog v-model="dialogVisible" width="40%">
+    <el-dialog v-model="dialogVisible" width="30%">
       <!-- 选项卡 -->
       <Tabs></Tabs>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
     </el-dialog>
 
     <!-- 弹出框结束 -->

@@ -15,23 +15,6 @@
       </div>
     </div>
 
-    <div
-      class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-    >
-      <div>
-        <span
-          class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"
-        >
-        </span>
-      </div>
-      <h3
-        class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"
-      >
-        Writes Upside-Down
-      </h3>
-      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>
-    </div>
-
     <!-- 弹出框 -->
 
     <el-dialog v-model="dialogVisible" width="40%">
@@ -81,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+// import Tabs from "@/components/settings/Tabs";
 import Tabs from "@/components/settings/Tabs.vue";
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";

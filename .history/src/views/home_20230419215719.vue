@@ -81,6 +81,7 @@
 </template>
 
 <script setup lang="ts">
+// import Tabs from "@/components/settings/Tabs";
 import Tabs from "@/components/settings/Tabs.vue";
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";

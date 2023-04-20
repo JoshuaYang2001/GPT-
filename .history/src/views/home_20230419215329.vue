@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen dark">
     <div
       class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
     >
       <div class="text-2xl font-bold">ChatGPT</div>
-      <div class="ml-4 text-sm text-gray-500 dark">
+      <div class="ml-4 text-sm text-gray-500">
         基于 OpenAI 的 ChatGPT 自然语言模型人工智能对话
       </div>
       <div
@@ -13,23 +13,6 @@
       >
         设置
       </div>
-    </div>
-
-    <div
-      class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-    >
-      <div>
-        <span
-          class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"
-        >
-        </span>
-      </div>
-      <h3
-        class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"
-      >
-        Writes Upside-Down
-      </h3>
-      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>
     </div>
 
     <!-- 弹出框 -->
@@ -81,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+// import Tabs from "@/components/settings/Tabs";
 import Tabs from "@/components/settings/Tabs.vue";
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";

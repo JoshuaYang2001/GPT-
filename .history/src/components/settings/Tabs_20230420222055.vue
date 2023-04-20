@@ -51,7 +51,6 @@ import { ref } from "vue";
 import { useStore } from "@/store/modules/app/index";
 import { storeToRefs } from "pinia";
 const store = useStore();
-// 使用storeToRefs才会变成响应式
 const { isDarkMode } = storeToRefs(store);
 function toggleMode() {
   store.toggleMode();

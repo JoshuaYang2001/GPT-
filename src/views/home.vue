@@ -1,18 +1,35 @@
 <template>
   <div class="flex flex-col h-screen">
     <div
-      class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
+        class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
     >
       <div class="text-2xl font-bold">ChatGPT</div>
-      <div class="ml-4 text-sm text-gray-500">
+      <div class="ml-4 text-sm text-gray-500 dark">
         基于 OpenAI 的 ChatGPT 自然语言模型人工智能对话
       </div>
       <div
-        class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
-        @click="clickConfig()"
+          class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
+          @click="clickConfig()"
       >
         设置
       </div>
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+    >
+      <div>
+        <span
+            class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"
+        >
+        </span>
+      </div>
+      <h3
+          class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"
+      >
+        Writes Upside-Down
+      </h3>
+      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>
     </div>
 
     <!-- 弹出框 -->
@@ -25,8 +42,8 @@
     <!-- 弹出框结束 -->
     <div class="flex-1 mx-2 mt-20 mb-2" ref="chatListDom">
       <div
-        class="group flex flex-col px-4 py-3 hover:bg-slate-100 rounded-lg"
-        v-for="item of messageList.filter((v) => v.role !== 'system')"
+          class="group flex flex-col px-4 py-3 hover:bg-slate-100 rounded-lg"
+          v-for="item of messageList.filter((v) => v.role !== 'system')"
       >
         <div class="flex justify-between items-center mb-2">
           <div class="font-bold">{{ roleAlias[item.role] }}：</div>
@@ -34,9 +51,9 @@
         </div>
         <div>
           <div
-            class="prose text-sm text-slate-600 leading-relaxed"
-            v-if="item.content"
-            v-html="md.render(item.content)"
+              class="prose text-sm text-slate-600 leading-relaxed"
+              v-if="item.content"
+              v-html="md.render(item.content)"
           ></div>
           <Loding v-else />
         </div>
@@ -49,11 +66,11 @@
       </div>
       <div class="flex">
         <input
-          class="input"
-          :type="isConfig ? 'password' : 'text'"
-          :placeholder="isConfig ? 'sk-xxxxxxxxxx' : '请输入'"
-          v-model="messageContent"
-          @keydown.enter="isTalking || sendOrSave()"
+            class="input"
+            :type="isConfig ? 'password' : 'text'"
+            :placeholder="isConfig ? 'sk-xxxxxxxxxx' : '请输入'"
+            v-model="messageContent"
+            @keydown.enter="isTalking || sendOrSave()"
         />
         <button class="btn" :disabled="isTalking" @click="sendOrSave()">
           {{ isConfig ? "保存" : "发送" }}
@@ -64,7 +81,6 @@
 </template>
 
 <script setup lang="ts">
-// import Tabs from "@/components/settings/Tabs";
 import Tabs from "@/components/settings/Tabs.vue";
 import type { ChatMessage } from "@/types";
 import { ref, watch, nextTick, onMounted } from "vue";
@@ -132,8 +148,8 @@ const sendChatMessage = async (content: string = messageContent.value) => {
 
 // 读取流
 const readStream = async (
-  reader: ReadableStreamDefaultReader<Uint8Array>,
-  status: number
+    reader: ReadableStreamDefaultReader<Uint8Array>,
+    status: number
 ) => {
   let partialLine = "";
 
@@ -163,16 +179,16 @@ const readStream = async (
 
       const json = JSON.parse(line.substring(6)); // start with "data: "
       const content =
-        status === 200
-          ? json.choices[0].delta.content ?? ""
-          : json.error.message;
+          status === 200
+              ? json.choices[0].delta.content ?? ""
+              : json.error.message;
       appendLastMessageContent(content);
     }
   }
 };
 
 const appendLastMessageContent = (content: string) =>
-  (messageList.value[messageList.value.length - 1].content += content);
+    (messageList.value[messageList.value.length - 1].content += content);
 
 // 发送或者保存按钮的逻辑
 const sendOrSave = () => {
@@ -220,7 +236,7 @@ const getAPIKey = () => {
   if (apiKey) return apiKey;
   const aesAPIKey = localStorage.getItem("apiKey") ?? "";
   apiKey = cryptoJS.AES.decrypt(aesAPIKey, getSecretKey()).toString(
-    cryptoJS.enc.Utf8
+      cryptoJS.enc.Utf8
   );
   return apiKey;
 };
@@ -243,9 +259,9 @@ watch(messageList.value, () => nextTick(() => scrollToBottom()));
 <style scoped>
 pre {
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica,
-    "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB",
-    "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN",
-    "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti",
-    SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB",
+  "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN",
+  "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti",
+  SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
 }
 </style>

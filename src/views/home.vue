@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen dark:bg-slate-800">
     <div
-      class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
+      class="dark:bg-slate-700 flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
     >
-      <div class="text-2xl font-bold">ChatGPT</div>
+      <div class="text-2xl font-bold dark text-gray-500">Bauhinia</div>
       <div class="ml-4 text-sm text-gray-500 dark">
-        基于 OpenAI 的 ChatGPT 自然语言模型人工智能对话
+        基于 OpenAI 的 gpt3.5-turbo的对话机器人
       </div>
       <div
         class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
@@ -15,26 +15,9 @@
       </div>
     </div>
 
-    <div
-      class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-    >
-      <div>
-        <span
-          class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"
-        >
-        </span>
-      </div>
-      <h3
-        class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"
-      >
-        Writes Upside-Down
-      </h3>
-      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>
-    </div>
-
     <!-- 弹出框 -->
 
-    <el-dialog v-model="dialogVisible" width="40%">
+    <el-dialog v-model="dialogVisible" width="40%" class="dark:bg-slate-800">
       <!-- 选项卡 -->
       <Tabs></Tabs>
     </el-dialog>
@@ -90,13 +73,13 @@ import Loding from "@/components/Loding.vue";
 import Copy from "@/components/Copy.vue";
 import { md } from "@/libs/markdown";
 
-let apiKey = "";
+let apiKey = "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";
 let isConfig = ref(true);
 let isTalking = ref(false);
 let messageContent = ref("");
 const chatListDom = ref<HTMLDivElement>();
 const decoder = new TextDecoder("utf-8");
-const roleAlias = { user: "ME", assistant: "ChatGPT", system: "System" };
+const roleAlias = { user: "ME", assistant: "Bauhinia", system: "System" };
 // chatgpt提示语
 const messageList = ref<ChatMessage[]>([
   {

@@ -15,26 +15,19 @@
       <div class="flex margin">
         <span>主题</span>
         <div class="flex flex-wrap items-center gap-4">
-          <template v-for="item of themeOptions" :key="item.key">
-            <el-button>
-              <el-icon @click="toggleMode" v-if="item.icon === 'light'"
-                ><Sunny
-              /></el-icon>
-              <el-icon v-else> <Moon /> </el-icon>
-            </el-button>
-          </template>
+          <el-button @click="lightMode">
+            <el-icon><Sunny /></el-icon>
+          </el-button>
+          <el-button @click="darkMode">
+            <el-icon><Moon /></el-icon>
+          </el-button>
         </div>
       </div>
     </el-tab-pane>
     <el-tab-pane label="用户信息" name="second"
       >角色信息
+      <!-- 黑夜模式试验代码 -->
       <div :class="{ dark: isDarkMode }">
-        <!-- 在上面的div元素中添加了一个dark类，当isDarkMode为true时，该类会生效，从而实现深色模式。 -->
-
-        <p :class="{ 'text-white': isDarkMode, 'text-black': !isDarkMode }">
-          当前主题模式：{{ isDarkMode ? "深夜模式" : "白天模式" }}
-        </p>
-
         <button
           :class="{ 'bg-gray-800': isDarkMode, 'bg-gray-200': !isDarkMode }"
           @click="toggleMode"
@@ -43,20 +36,44 @@
         </button>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="系统信息" name="third">系统信息</el-tab-pane>
+    <el-tab-pane label="系统信息" name="third">系统信息 </el-tab-pane>
   </el-tabs>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useStore } from "@/store/modules/app/index";
 import { storeToRefs } from "pinia";
+import type { Moon } from "@icon-park/vue-next";
 const store = useStore();
-// 使用storeToRefs才会变成响应式
+// 使用storeToRefs才会变成
 const { isDarkMode } = storeToRefs(store);
 function toggleMode() {
   store.toggleMode();
   console.log(isDarkMode);
 }
+
+// 点击按钮变化主题
+const darkMode = () => {
+  //这个条件用于判断当前系统应用模式是否开启了“暗”模式（win10在   个性化-颜色-选择默认应用模式  中修改）
+  // if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (localStorage.theme === "dark" || !("theme" in localStorage)) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+
+  localStorage.theme = "light";
+
+  localStorage.theme = "dark";
+
+  localStorage.removeItem("theme");
+  console.log(1);
+};
+
+const lightMode = () => {
+  document.documentElement.classList.remove("dark");
+  console.log(1);
+};
 
 const value = ref("");
 // 语言选项

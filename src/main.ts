@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+// 引入tailwindcss
 import "./assets/tailwind.css";
 import "@icon-park/vue-next/styles/index.css";
 import "highlight.js/styles/dark.css";

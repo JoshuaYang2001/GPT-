@@ -1,5 +1,4 @@
 import type { ChatMessage } from "@/types";
-
 export async function chat(messageList: ChatMessage[], apiKey: string) {
   try {
     const result = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -16,6 +15,8 @@ export async function chat(messageList: ChatMessage[], apiKey: string) {
         messages: messageList,
       }),
     });
+    console.log(result);
+
     return result;
   } catch (error) {
     throw error;

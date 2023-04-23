@@ -1,60 +1,56 @@
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+
+// 引入i18n
+// import { useI18n } from "vue-i18n";
+
+// const { t } = useI18n();
+
+// console.log(t("login.useName"));
+
+// const { locale } = useI18n();
+
+// const changeLang = (lang: string) => {
+//   locale.value = lang;
+//   localStorage.setItem("lang", lang); // 重要！下面遇到问题里解释
+// };
+
+const router = useRouter();
+
+function goHome() {
+  router.push("/");
+}
+</script>
+
 <template>
-  <div
-    class="h-full bg-white dark:bg-slate-800 px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-  >
-    <div>
-      <div class="flex items-stretch justify-center">
-        <div
-          class="px-16 py-4 bg-cyan-400 dark:bg-indigo-500 shadow-lg shadow-cyan-500/50 text-white rounded-md m-1"
-        >
-          Flex01
-        </div>
-        <div
-          class="self-auto bg-cyan-400 dark:bg-indigo-500 shadow-lg shadow-cyan-500/50 px-16 py-4 text-white rounded-md m-1"
-        >
-          Flex02
-        </div>
-        <div
-          class="px-16 py-4 bg-cyan-400 dark:bg-indigo-500 shadow-lg shadow-cyan-500/50 text-white m-1 rounded-md"
-        >
-          Flex03
+  <div class="flex h-full">
+    <div class="px-4 m-auto space-y-4 text-center max-[400px]">
+      <h1 class="text-4xl text-slate-800 dark:text-neutral-200">
+        Sorry, page not found!
+      </h1>
+      <p class="text-base text-slate-500 dark:text-neutral-400">
+        Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve
+        mistyped the URL? Be sure to check your spelling.
+      </p>
+      <div class="flex items-center justify-center text-center">
+        <div class="w-[300px]">
+          <img src="../../img/404.svg" alt="404" />
         </div>
       </div>
-      <div class="my-20">
-        <button
-          class="text-white px-2.5 py-1.5 mx-10 bg-cyan-500 shadow-lg shadow-cyan-500/50 rounded-md"
-          @click="lightMode"
-        >
-          普通模式
-        </button>
-        <button
-          class="text-white px-2.5 py-1.5 mx-10 bg-blue-500 shadow-lg shadow-blue-500/50 rounded-md"
-          @click="darkMode"
-        >
-          暗黑模式
-        </button>
+      <el-button type="primary" @click="goHome"> 回到首页 </el-button>
+
+      <!-- <div>
+        {{ `$t('login.userName')` }}
       </div>
+      <div v-t="'login.password'"></div>
+
+      <h1>看下面</h1>
+      <template>
+        <div class="menu">
+          <div class="menu-item" @click="changeLang('en')">English</div>
+          <div class="menu-item" @click="changeLang('zh')">中文</div>
+        </div>
+      </template> -->
     </div>
   </div>
 </template>
-
-<script setup>
-const darkMode = () => {
-  //这个条件用于判断当前系统应用模式是否开启了“暗”模式（win10在   个性化-颜色-选择默认应用模式  中修改）
-  // if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  if (localStorage.theme === "dark" || !("theme" in localStorage)) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-
-  localStorage.theme = "light";
-
-  localStorage.theme = "dark";
-
-  localStorage.removeItem("theme");
-};
-const lightMode = () => {
-  document.documentElement.classList.remove("dark");
-};
-</script>

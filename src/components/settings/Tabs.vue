@@ -24,33 +24,15 @@
         </div>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="用户信息" name="second"
-      >角色信息
-      <!-- 黑夜模式试验代码 -->
-      <div :class="{ dark: isDarkMode }">
-        <button
-          :class="{ 'bg-gray-800': isDarkMode, 'bg-gray-200': !isDarkMode }"
-          @click="toggleMode"
-        >
-          {{ isDarkMode ? "关闭深夜模式" : "开启深夜模式" }}
-        </button>
-      </div>
-    </el-tab-pane>
+    <el-tab-pane label="用户信息" name="second">角色信息 </el-tab-pane>
     <el-tab-pane label="系统信息" name="third">系统信息 </el-tab-pane>
   </el-tabs>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useStore } from "@/store/modules/app/index";
-import { storeToRefs } from "pinia";
 import type { Moon } from "@icon-park/vue-next";
-const store = useStore();
+
 // 使用storeToRefs才会变成
-const { isDarkMode } = storeToRefs(store);
-function toggleMode() {
-  store.toggleMode();
-  console.log(isDarkMode);
-}
 
 // 点击按钮变化主题
 const darkMode = () => {

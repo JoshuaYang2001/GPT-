@@ -11,7 +11,7 @@
         class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
         @click="clickConfig()"
       >
-        设置
+        <el-icon size="20px"><Setting /></el-icon>
       </div>
     </div>
 
@@ -48,6 +48,13 @@
         请输入 API Key：
       </div>
       <div class="flex">
+        <!-- <input
+          class="input"
+          :type="isConfig ? 'password' : 'text'"
+          :placeholder="isConfig ? 'sk-xxxxxxxxxx' : '请输入'"
+          v-model="messageContent"
+          @keydown.enter="isTalking || sendOrSave()"
+        /> -->
         <input
           class="input"
           :type="isConfig ? 'password' : 'text'"
@@ -56,7 +63,7 @@
           @keydown.enter="isTalking || sendOrSave()"
         />
         <button class="btn" :disabled="isTalking" @click="sendOrSave()">
-          {{ isConfig ? "保存" : "发送" }}
+          <el-icon><Promotion /></el-icon>
         </button>
       </div>
     </div>
@@ -73,7 +80,7 @@ import Loding from "@/components/Loding.vue";
 import Copy from "@/components/Copy.vue";
 import { md } from "@/libs/markdown";
 
-let apiKey = "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";
+let apiKey = "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";
 let isConfig = ref(true);
 let isTalking = ref(false);
 let messageContent = ref("");
@@ -194,12 +201,12 @@ const clickConfig = () => {
   dialogVisible.value = true;
   console.log(dialogVisible.value);
 
-  if (!isConfig.value) {
-    messageContent.value = getAPIKey();
-  } else {
-    clearMessageContent();
-  }
-  switchConfigStatus();
+  // if (!isConfig.value) {
+  //   messageContent.value = getAPIKey();
+  // } else {
+  //   clearMessageContent();
+  // }
+  // switchConfigStatus();
 };
 
 const getSecretKey = () => "lianginx";

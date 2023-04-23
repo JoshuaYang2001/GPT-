@@ -1,94 +1,99 @@
 <template>
-  <div class="flex flex-col h-screen">
-    <div
-        class="flex flex-nowrap fixed w-full items-baseline top-0 px-6 py-4 bg-gray-100"
-    >
-      <div class="text-2xl font-bold">ChatGPT</div>
-      <div class="ml-4 text-sm text-gray-500 dark">
-        基于 OpenAI 的 ChatGPT 自然语言模型人工智能对话
-      </div>
+  <div class="flex h-screen">
+    <Side></Side>
+    <div class="flex-auto relative">
       <div
-          class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
-          @click="clickConfig()"
+          class="flex flex-nowrap w-full items-baseline top-0 px-6 py-4 bg-gray-100"
       >
-        设置
-      </div>
-    </div>
-
-    <div
-        class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-    >
-      <div>
-        <span
-            class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"
+        <div class="text-2xl font-bold">ChatGPT</div>
+        <div class="ml-4 text-sm text-gray-500 dark">
+          基于 OpenAI 的 ChatGPT 自然语言模型人工智能对话
+        </div>
+        <div
+            class="ml-auto px-3 py-2 text-sm cursor-pointer hover:bg-white rounded-md"
+            @click="clickConfig()"
         >
-        </span>
-      </div>
-      <h3
-          class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"
-      >
-        Writes Upside-Down
-      </h3>
-      <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>
-    </div>
-
-    <!-- 弹出框 -->
-
-    <el-dialog v-model="dialogVisible" width="40%">
-      <!-- 选项卡 -->
-      <Tabs></Tabs>
-    </el-dialog>
-
-    <!-- 弹出框结束 -->
-    <div class="flex-1 mx-2 mt-20 mb-2" ref="chatListDom">
-      <div
-          class="group flex flex-col px-4 py-3 hover:bg-slate-100 rounded-lg"
-          v-for="item of messageList.filter((v) => v.role !== 'system')"
-      >
-        <div class="flex justify-between items-center mb-2">
-          <div class="font-bold">{{ roleAlias[item.role] }}：</div>
-          <Copy class="invisible group-hover:visible" :content="item.content" />
-        </div>
-        <div>
-          <div
-              class="prose text-sm text-slate-600 leading-relaxed"
-              v-if="item.content"
-              v-html="md.render(item.content)"
-          ></div>
-          <Loding v-else />
+          设置
         </div>
       </div>
-    </div>
 
-    <div class="sticky bottom-0 w-full p-6 pb-8 bg-gray-100">
-      <div class="-mt-2 mb-2 text-sm text-gray-500" v-if="isConfig">
-        请输入 API Key：
+<!--      <div-->
+<!--          class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"-->
+<!--      >-->
+<!--        <div>-->
+<!--        <span-->
+<!--            class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg"-->
+<!--        >-->
+<!--        </span>-->
+<!--        </div>-->
+<!--        <h3-->
+<!--            class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight"-->
+<!--        >-->
+<!--          Writes Upside-Down-->
+<!--        </h3>-->
+<!--        <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm"></p>-->
+<!--      </div>-->
+
+      <!-- 弹出框 -->
+
+      <el-dialog v-model="dialogVisible" width="40%">
+        <!-- 选项卡 -->
+        <Tabs></Tabs>
+      </el-dialog>
+
+      <!-- 弹出框结束 -->
+      <div class="flex-1 mx-2 mt-20 mb-2" ref="chatListDom">
+        <div
+            class="group flex flex-col px-4 py-3 hover:bg-slate-100 rounded-lg"
+            v-for="item of messageList.filter((v) => v.role !== 'system')"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <div class="font-bold">{{ roleAlias[item.role] }}：</div>
+            <Copy class="invisible group-hover:visible" :content="item.content"/>
+          </div>
+          <div>
+            <div
+                class="prose text-sm text-slate-600 leading-relaxed"
+                v-if="item.content"
+                v-html="md.render(item.content)"
+            ></div>
+            <Loding v-else/>
+          </div>
+        </div>
       </div>
-      <div class="flex">
-        <input
-            class="input"
-            :type="isConfig ? 'password' : 'text'"
-            :placeholder="isConfig ? 'sk-xxxxxxxxxx' : '请输入'"
-            v-model="messageContent"
-            @keydown.enter="isTalking || sendOrSave()"
-        />
-        <button class="btn" :disabled="isTalking" @click="sendOrSave()">
-          {{ isConfig ? "保存" : "发送" }}
-        </button>
+
+      <div class="absolute right-0 left-0 bottom-0 p-6 pb-8 bg-gray-100">
+        <div class="-mt-2 mb-2 text-sm text-gray-500 w-full" v-if="isConfig">
+          请输入 API Key：
+        </div>
+        <div class="flex">
+          <input
+              class="input w-full"
+              :type="isConfig ? 'password' : 'text'"
+              :placeholder="isConfig ? 'sk-xxxxxxxxxx' : '请输入'"
+              v-model="messageContent"
+              @keydown.enter="isTalking || sendOrSave()"
+          />
+          <button class="btn" :disabled="isTalking" @click="sendOrSave()">
+            {{ isConfig ? "保存" : isTalking ? "正在解答" : "发送" }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+
 import Tabs from "@/components/settings/Tabs.vue";
-import type { ChatMessage } from "@/types";
-import { ref, watch, nextTick, onMounted } from "vue";
-import { chat } from "@/libs/gpt";
+import type {ChatMessage} from "@/types";
+import {ref, watch, nextTick, onMounted} from "vue";
+import {chat} from "@/libs/gpt";
 import cryptoJS from "crypto-js";
 import Loding from "@/components/Loding.vue";
 import Copy from "@/components/Copy.vue";
-import { md } from "@/libs/markdown";
+import {md} from "@/libs/markdown";
+import Side from "@/components/side/Side.vue";
 
 let apiKey = "";
 let isConfig = ref(true);
@@ -96,7 +101,7 @@ let isTalking = ref(false);
 let messageContent = ref("");
 const chatListDom = ref<HTMLDivElement>();
 const decoder = new TextDecoder("utf-8");
-const roleAlias = { user: "ME", assistant: "ChatGPT", system: "System" };
+const roleAlias = {user: "ME", assistant: "ChatGPT", system: "System"};
 // chatgpt提示语
 const messageList = ref<ChatMessage[]>([
   {
@@ -130,11 +135,11 @@ const sendChatMessage = async (content: string = messageContent.value) => {
     if (messageList.value.length === 2) {
       messageList.value.pop();
     }
-    messageList.value.push({ role: "user", content });
+    messageList.value.push({role: "user", content});
     clearMessageContent();
-    messageList.value.push({ role: "assistant", content: "" });
+    messageList.value.push({role: "assistant", content: ""});
 
-    const { body, status } = await chat(messageList.value, getAPIKey());
+    const {body, status} = await chat(messageList.value, getAPIKey());
     if (body) {
       const reader = body.getReader();
       await readStream(reader, status);
@@ -155,10 +160,10 @@ const readStream = async (
 
   while (true) {
     // eslint-disable-next-line no-await-in-loop
-    const { value, done } = await reader.read();
+    const {value, done} = await reader.read();
     if (done) break;
 
-    const decodedText = decoder.decode(value, { stream: true });
+    const decodedText = decoder.decode(value, {stream: true});
 
     if (status !== 200) {
       const json = JSON.parse(decodedText); // start with "data: "
